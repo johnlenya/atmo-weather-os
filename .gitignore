@@ -1,0 +1,7 @@
+# dev screenshots / local captures
+.shots/
+
+# OS + editor cruft
+.DS_Store
+Thumbs.db
+*.log

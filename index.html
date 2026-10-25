@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>ATMO — The World's Weather OS</title>
+<meta name="description" content="ATMO — a futuristic weather forecasting OS. Realtime 3D atmosphere orb, holographic forecast, AI ensemble prediction." />
+<meta name="theme-color" content="#0A0A0F" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- ───────────────────────── icon sprite ───────────────────────── -->
+<svg class="sprite" aria-hidden="true" focusable="false"><defs>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 1.8v2.6M12 19.6v2.6M1.8 12h2.6M19.6 12h2.6M4.8 4.8l1.9 1.9M17.3 17.3l1.9 1.9M19.2 4.8l-1.9 1.9M6.7 17.3l-1.9 1.9"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7.2 18.4h9.4a3.9 3.9 0 0 0 .6-7.76A6 6 0 0 0 5.9 11.4a3.5 3.5 0 0 0 1.3 7z"/></symbol>
+  <symbol id="i-rain" viewBox="0 0 24 24"><path d="M7.4 15.6h9.2a3.7 3.7 0 0 0 .6-7.4A5.8 5.8 0 0 0 6.2 9.1a3.4 3.4 0 0 0 1.2 6.5z"/><path d="M8.6 18.4l-.9 2.4M12 18.4l-.9 2.4M15.4 18.4l-.9 2.4"/></symbol>
+  <symbol id="i-storm" viewBox="0 0 24 24"><path d="M7.4 14.6h9.2a3.7 3.7 0 0 0 .6-7.4A5.8 5.8 0 0 0 6.2 8.1a3.4 3.4 0 0 0 1.2 6.5z"/><path d="M13.2 15.4l-3.1 4.3h3l-.7 2.9 3.7-4.7h-3z"/></symbol>
+  <symbol id="i-wind" viewBox="0 0 24 24"><path d="M2.6 8.4h9.6a2.9 2.9 0 1 0-2.9-2.9M2.6 12.6h13.4a2.9 2.9 0 1 1-2.9 2.9M2.6 17h6.6"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 2.9s6.3 6.7 6.3 10.9a6.3 6.3 0 0 1-12.6 0C5.7 9.6 12 2.9 12 2.9z"/></symbol>
+  <symbol id="i-uv" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.1"/><path d="M12 4.4V6M12 18v1.6M4.4 12H6M18 12h1.6M6.6 6.6l1.1 1.1M16.3 16.3l1.1 1.1M17.4 6.6l-1.1 1.1M7.7 16.3l-1.1 1.1"/><path d="M4.2 19.8c4.3-2.4 11.3-2.4 15.6 0" opacity=".5"/></symbol>
+  <symbol id="i-aqi" viewBox="0 0 24 24"><circle cx="8.4" cy="9" r="2.1"/><circle cx="15.6" cy="7.2" r="1.5"/><circle cx="13.2" cy="12.6" r="2.6"/><circle cx="18" cy="13.8" r="1.2"/><circle cx="6.6" cy="16.2" r="1.8"/></symbol>
+  <symbol id="i-ar" viewBox="0 0 24 24"><path d="M12 2.6l8.6 4.8v9.2L12 21.4 3.4 16.6V7.4z"/><path d="M12 12l8.6-4.8M12 12v9.4M12 12L3.4 7.2" opacity=".55"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2.6" width="6" height="11.2" rx="3"/><path d="M5.2 11.4a6.8 6.8 0 0 0 13.6 0M12 18.2v3.2M8.4 21.4h7.2"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13.4 2.2L5.6 13.1h4.9L9.4 21.8l8.1-11.2h-5z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.4L12 4l8 6.4V20a1 1 0 0 1-1 1h-4.2v-6H9.2v6H5a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l8.6 4.4L12 11.8 3.4 7.4z"/><path d="M3.4 12.4L12 16.8l8.6-4.4M3.4 16.6L12 21l8.6-4.4" opacity=".6"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M11 2.6l1.7 5 5 1.7-5 1.7-1.7 5-1.7-5-5-1.7 5-1.7z"/><path d="M18.4 15.2l.7 2.1 2.1.7-2.1.7-.7 2.1-.7-2.1-2.1-.7 2.1-.7z"/></symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.2"/><path d="M15.6 8.4l-2 5.2-5.2 2 2-5.2z"/></symbol>
+  <symbol id="i-gps" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.8"/><circle cx="12" cy="12" r="7.6" opacity=".55"/><path d="M12 1.6v3M12 19.4v3M1.6 12h3M19.4 12h3"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 5.5l6.5 6.5L9 18.5"/></symbol>
+</defs></svg>
+
+<div class="page-glow" aria-hidden="true"></div>
+
+<!-- ───────────────────────── device ───────────────────────── -->
+<div class="device" id="device">
+  <div class="device__halo" id="deviceHalo" aria-hidden="true"></div>
+  <div class="device__frame">
+    <div class="device__notch" aria-hidden="true"></div>
+    <div class="device__screen" id="screen">
+
+      <!-- ambient layers -->
+      <canvas class="layer-stars" id="stars" aria-hidden="true"></canvas>
+      <div class="blobs" aria-hidden="true">
+        <span class="blob blob--a"></span>
+        <span class="blob blob--b"></span>
+        <span class="blob blob--c"></span>
+      </div>
+      <div class="grain" aria-hidden="true"></div>
+      <div class="scanlines" aria-hidden="true"></div>
+
+      <!-- ── app bar ── -->
+      <header class="appbar" id="appbar">
+        <div class="statusbar">
+          <span class="statusbar__time" id="statusTime">09:41</span>
+          <span class="statusbar__icons">
+            <svg viewBox="0 0 18 12" class="sb-icon" aria-hidden="true"><rect x="0" y="7.5" width="3" height="4.5" rx="1"/><rect x="4.6" y="5" width="3" height="7" rx="1"/><rect x="9.2" y="2.6" width="3" height="9.4" rx="1"/><rect x="13.8" y="0" width="3" height="12" rx="1" opacity=".35"/></svg>
+          </span>
+        </div>
+
+        <div class="topbar">
+          <button class="location" id="btnLoc" type="button" aria-haspopup="dialog" aria-label="Change location">
+            <span class="gps" aria-hidden="true">
+              <i class="gps__ring"></i><i class="gps__ring gps__ring--2"></i>
+              <svg class="gps__ico"><use href="#i-gps"/></svg>
+            </span>
+            <span class="location__meta">
+              <strong class="location__city" id="locCity">Nairobi, KE</strong>
+              <span class="location__live"><em class="pulse-dot"></em>Live · <span id="locLive">grid 4 · 1 km</span></span>
+            </span>
+            <svg class="location__chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </button>
+          <div class="topbar__act">
+            <button class="iconbtn" id="btnAr" aria-label="Open AR sky view"><svg><use href="#i-ar"/></svg></button>
+            <button class="iconbtn" id="btnVoice" aria-label="Voice command"><svg><use href="#i-mic"/></svg></button>
+          </div>
+        </div>
+      </header>
+
+      <!-- ── scrolling content ── -->
+      <div class="content" id="content">
+
+        <!-- hero -->
+        <section class="hero">
+          <div class="orb-stage" id="orbStage" role="img" aria-label="Morphing 3D atmosphere orb. Tap to change weather state.">
+            <div class="orb-glow" id="orbGlow" aria-hidden="true"></div>
+            <div class="orb-holo" aria-hidden="true"></div>
+            <canvas class="orb-canvas" id="orb" width="640" height="640"></canvas>
+            <div class="orb-hud" aria-hidden="true">
+              <span class="orb-hud__ring"></span>
+              <span class="orb-hud__tick orb-hud__tick--1"></span>
+              <span class="orb-hud__tick orb-hud__tick--2"></span>
+              <span class="orb-hud__tick orb-hud__tick--3"></span>
+              <span class="orb-hud__ticks"></span>
+            </div>
+            <div class="readout">
+              <p class="readout__cond" id="condLabel">Scattered Thunderstorms</p>
+              <p class="readout__temp"><span id="tempVal">27</span><sup>°C</sup></p>
+              <p class="readout__feels">Feels like <b id="feelsVal">29°</b></p>
+              <p class="readout__hl"><span>H <b id="hiVal">31°</b></span><span class="sep"></span><span>L <b id="loVal">21°</b></span></p>
+            </div>
+          </div>
+
+          <div class="switch" id="stateSwitch" role="tablist" aria-label="Weather state">
+            <button class="switch__btn is-active" role="tab" aria-selected="true" data-state="clear">Clear</button>
+            <button class="switch__btn" role="tab" aria-selected="false" data-state="cloudy">Cloudy</button>
+            <button class="switch__btn" role="tab" aria-selected="false" data-state="rain">Rain</button>
+            <button class="switch__btn" role="tab" aria-selected="false" data-state="storm">Storm</button>
+            <span class="switch__pill" id="switchPill" aria-hidden="true"></span>
+          </div>
+
+          <p class="ticker" id="ticker"></p>
+        </section>
+
+        <!-- forecast -->
+        <section class="block">
+          <div class="block__head">
+            <h2>Holographic Forecast</h2>
+            <span class="mono">next 24 h · RAPID</span>
+          </div>
+          <div class="forecast" id="forecast" tabindex="0" aria-label="Hourly forecast, scroll horizontally"></div>
+        </section>
+
+        <!-- widgets -->
+        <section class="grid">
+          <article class="card card--wide glass" id="cardAqi">
+            <div class="card__head">
+              <h3><svg class="card__ico"><use href="#i-aqi"/></svg>Air Quality Index</h3>
+              <span class="chip" id="aqiChip">Moderate</span>
+            </div>
+            <div class="aqi">
+              <div class="aqi__num"><b id="aqiVal">68</b><span>AQI · PM2.5</span></div>
+              <div class="tube" id="aqiTube">
+                <svg class="tube__svg" viewBox="0 0 300 72" preserveAspectRatio="none" aria-hidden="true">
+                  <path class="tube__wave tube__wave--b" id="aqiWaveB" d=""/>
+                  <path class="tube__wave tube__wave--f" id="aqiWaveF" d=""/>
+                </svg>
+                <span class="tube__grid" aria-hidden="true"></span>
+              </div>
+            </div>
+            <p class="card__foot mono" id="aqiFoot">18 µg/m³ · trending down · sensor 12 s</p>
+          </article>
+
+          <article class="card card--wide glass">
+            <div class="card__head">
+              <h3><svg class="card__ico"><use href="#i-wind"/></svg>Wind Vector Field</h3>
+              <span class="chip chip--cyan" id="windChip">NNE · 12 km/h</span>
+            </div>
+            <div class="windwrap">
+              <canvas class="wind" id="windField" aria-hidden="true"></canvas>
+              <div class="windwrap__scale mono" aria-hidden="true">
+                <span>0</span><span>10</span><span>20</span><span>30 kt</span>
+              </div>
+            </div>
+            <p class="card__foot mono" id="windFoot">gust 24 · shear low · jet 118 kt</p>
+          </article>
+
+          <article class="card glass ringcard">
+            <h3><svg class="card__ico"><use href="#i-uv"/></svg>UV Index</h3>
+            <div class="ring" id="ringUv"></div>
+            <p class="card__foot mono" id="uvFoot">burn 42 min</p>
+          </article>
+
+          <article class="card glass ringcard">
+            <h3><svg class="card__ico"><use href="#i-drop"/></svg>Humidity</h3>
+            <div class="ring" id="ringHum"></div>
+            <p class="card__foot mono" id="humFoot">dew pt 16°</p>
+          </article>
+        </section>
+
+        <!-- AI ensemble -->
+        <section class="block">
+          <div class="block__head">
+            <h2>AI Ensemble Prediction</h2>
+            <span class="mono" id="aiConfHead">14 days · 51 members</span>
+          </div>
+          <article class="card glass ai">
+            <div class="ai__bars" id="aiBars" aria-label="14 day AI forecast with confidence"></div>
+            <div class="ai__legend mono">
+              <span><i class="swatch swatch--temp"></i>high / low</span>
+              <span><i class="swatch swatch--prec"></i>precip probability</span>
+              <span><i class="swatch swatch--conf"></i>confidence</span>
+            </div>
+            <p class="ai__note" id="aiNote">
+              <svg class="ai__spark"><use href="#i-spark"/></svg>
+              <span>Monsoon onset modelled for <b>03 Nov</b> · evening convective window 16:00–20:00 · ensemble spread low.</span>
+            </p>
+          </article>
+        </section>
+
+        <footer class="foot mono">
+          <span>ATMO OS 2.6.1</span><span class="dot"></span>
+          <span>atmosphere kernel 4.19</span><span class="dot"></span>
+          <span>ensemble 51</span><span class="dot"></span>
+          <span>synced 12 s ago</span>
+        </footer>
+        <div class="dock-spacer"></div>
+      </div>
+
+      <!-- ── dock ── -->
+      <nav class="dock glass" id="dock" aria-label="Primary">
+        <span class="dock__pill" id="dockPill" aria-hidden="true"></span>
+        <button class="dock__btn is-active" data-dock="home"><svg><use href="#i-home"/></svg><em>Home</em></button>
+        <button class="dock__btn" data-dock="layers"><svg><use href="#i-layers"/></svg><em>Layers</em></button>
+        <button class="dock__btn" data-dock="ai"><svg><use href="#i-spark"/></svg><em>AI</em></button>
+        <button class="dock__btn" data-dock="ar"><svg><use href="#i-ar"/></svg><em>AR</em></button>
+      </nav>
+
+      <!-- ── overlays ── -->
+      <canvas class="layer-rain" id="rainOverlay" aria-hidden="true"></canvas>
+      <div class="scrim" id="scrim" hidden></div>
+
+      <!-- AR sky view -->
+      <section class="ar" id="arMode" aria-hidden="true" aria-label="AR sky view mode">
+        <div class="ar__sky" id="arSky"></div>
+        <div class="ar__clouds ar__clouds--far" aria-hidden="true"></div>
+        <div class="ar__clouds ar__clouds--near" aria-hidden="true"></div>
+        <div class="ar__sun" id="arSun" aria-hidden="true"></div>
+        <div class="ar__horizon" aria-hidden="true">
+          <div class="ar__ground"></div>
+          <div class="ar__ticks" id="arTicks"></div>
+        </div>
+        <div class="ar__reticle" aria-hidden="true">
+          <span class="ar__bracket ar__bracket--tl"></span><span class="ar__bracket ar__bracket--tr"></span>
+          <span class="ar__bracket ar__bracket--bl"></span><span class="ar__bracket ar__bracket--br"></span>
+          <span class="ar__cross"></span>
+        </div>
+        <div class="ar__tag" id="arTag">
+          <b id="arTagName">Cumulonimbus</b>
+          <span class="mono" id="arTagMeta">1.2 km · 340° · 82% moisture</span>
+        </div>
+        <div class="ar__topleft mono" id="arCompass">N 340° · PITCH −4° · 12 km/h NNE</div>
+        <div class="ar__bottom">
+          <span class="mono ar__hint">AR · SKY VIEW · occlusion on</span>
+          <button class="iconbtn iconbtn--ghost" id="btnArClose" aria-label="Exit AR mode"><svg><use href="#i-close"/></svg></button>
+        </div>
+      </section>
+
+      <!-- voice command sheet -->
+      <section class="sheet" id="voiceSheet" aria-hidden="true" aria-label="Voice command">
+        <div class="sheet__grab" aria-hidden="true"></div>
+        <p class="sheet__state mono" id="voiceState">LISTENING</p>
+        <canvas class="sheet__wave" id="voiceWave" aria-hidden="true"></canvas>
+        <p class="sheet__query" id="voiceQuery">“Will it rain tonight?”</p>
+        <p class="sheet__answer" id="voiceAnswer">Rain probability peaks at <b>74%</b> between 21:00 and 23:00. Expect <b>4.2 mm</b> — umbrella advised.</p>
+        <div class="sheet__chips" id="voiceChips">
+          <button data-q="Will it rain tonight?">Will it rain tonight?</button>
+          <button data-q="UV at noon?">UV at noon?</button>
+          <button data-q="Wind for the flight?">Wind for the flight?</button>
+        </div>
+        <button class="sheet__close" id="btnVoiceClose">Done</button>
+      </section>
+
+      <!-- location picker sheet -->
+      <section class="sheet sheet--loc" id="locSheet" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Change location">
+        <div class="sheet__grab" aria-hidden="true"></div>
+        <p class="sheet__state mono">GROUND STATIONS</p>
+        <p class="sheet__query">Choose a location</p>
+        <ul class="citylist" id="cityList"></ul>
+        <button class="sheet__close" id="btnLocClose">Done</button>
+      </section>
+
+      <!-- boot splash -->
+      <div class="boot" id="boot">
+        <div class="boot__orb" id="bootOrb" aria-hidden="true"></div>
+        <h1 class="boot__title">ATMO</h1>
+        <p class="boot__sub mono">The World's Weather OS</p>
+        <div class="boot__bar" aria-hidden="true"><i id="bootBar"></i></div>
+        <p class="boot__log mono" id="bootLog">initializing atmosphere kernel…</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="js/noise.js"></script>
+<script src="js/orb.js"></script>
+<script src="js/effects.js"></script>
+<script src="js/widgets.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
